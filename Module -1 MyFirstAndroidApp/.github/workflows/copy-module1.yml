@@ -1,0 +1,36 @@
+name: Copy Module 1
+
+on:
+  workflow_dispatch:
+
+jobs:
+  copy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout portfolio repository
+        uses: actions/checkout@v6
+
+      - name: Checkout My First Application
+        uses: actions/checkout@v6
+        with:
+          repository: khinyadanar-phyo/My-First-Application
+          path: source-app
+
+      - name: Copy application files
+        run: |
+          cp -r source-app/app "Module -1 MyFirstAndroidApp/"
+          cp -r source-app/gradle "Module -1 MyFirstAndroidApp/"
+          cp source-app/build.gradle.kts "Module -1 MyFirstAndroidApp/"
+          cp source-app/settings.gradle.kts "Module -1 MyFirstAndroidApp/"
+          cp source-app/gradle.properties "Module -1 MyFirstAndroidApp/"
+          cp source-app/gradlew "Module -1 MyFirstAndroidApp/"
+          cp source-app/gradlew.bat "Module -1 MyFirstAndroidApp/"
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "Add My First Android App source code" || echo "No changes"
+          git push
